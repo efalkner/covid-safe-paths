@@ -1,19 +1,9 @@
 name: E2E
 
-on: push
-  # push:
-  #   branches:
-  #     - develop
-  #     - release-candidate
-  #     - master
-  # pull_request:
-  #   branches:
-  #     - develop
-  #     - release-candidate
-  #     - master
+on: [push, pull_request]
 
 jobs:
-  e2e-ios:
+  build-ios:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@master
@@ -62,7 +52,7 @@ jobs:
       - name: Build artifact for End to End testing
         run: yarn build:e2e:ios
 
-      - name: Run end to end tests for iOS
+      - name: Run End to End tests for iOS
         run: yarn test:e2e:ios
 
       - name: Upload Screenshots
