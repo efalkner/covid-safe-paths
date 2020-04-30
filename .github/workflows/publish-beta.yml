@@ -35,8 +35,6 @@ jobs:
           ruby-version: 2.6
 
       - name: Install Bundler (Ruby's dependency manager)
-        with:
-          ruby-version: 2.6
         run: gem install bundler
 
       - name: Cache ruby gems
@@ -49,8 +47,6 @@ jobs:
         working-directory: ./android
 
       - name: Install ruby gems for Fastlane
-        with:
-          ruby-version: 2.6
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
