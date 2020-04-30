@@ -33,6 +33,17 @@ platform :android do
         ENV["secrets.KEY_PASSWORD"] => "key_password"
       }
     )
+
+    gradle(
+      task: "bundleRelease",
+      print_command: false,
+      properties: {
+        ENV["secrets.SIGNING_KEY"] => "keystore.jks",
+        ENV["secrets.KEY_ALIAS"] => "key_alias",
+        ENV["secrets.KEY_STORE_PASSWORD"] => "store_password",
+        ENV["secrets.KEY_PASSWORD"] => "key_password"
+      }
+    )
     # upload_to_play_store(track: 'beta')
     # slack(message: 'Successfully distributed a new beta build')
   end
