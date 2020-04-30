@@ -40,11 +40,10 @@ jobs:
       - name: Cache ruby gems
         uses: actions/cache@v1
         with:
-          path: vendor/bundle
+          path: android/vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-        working-directory: ./android
 
       - name: Install ruby gems for Fastlane
         run: |
