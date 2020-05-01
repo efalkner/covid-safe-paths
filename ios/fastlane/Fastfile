@@ -32,7 +32,7 @@ end
 
 
 lane :beta do
-platform :ios do
+  platform :ios do
 
     desc "Push a new beta build to TestFlight"
     # # Ensure that your git status is not dirty
@@ -66,25 +66,24 @@ platform :ios do
       silent: true,
       clean: true,
     )
-
-
-    # # Increment the build number (not the version number)
-    # # Providing the xcodeproj is optional
-    # increment_build_number(xcodeproj: "Example.xcodeproj")
-
-    # # Commit the version bump
-    # commit_version_bump(xcodeproj: "Example.xcodeproj")
-
-    # # Add a git tag for this build. This will automatically
-    # # use an appropriate git tag name
-    # add_git_tag
-
-    # # Push the new commit and tag back to your git remote
-    # push_to_git_remote
-
-      # upload_to_testflight
   end
 end
+
+  # # Increment the build number (not the version number)
+  # # Providing the xcodeproj is optional
+  # increment_build_number(xcodeproj: "Example.xcodeproj")
+
+  # # Commit the version bump
+  # commit_version_bump(xcodeproj: "Example.xcodeproj")
+
+  # # Add a git tag for this build. This will automatically
+  # # use an appropriate git tag name
+  # add_git_tag
+
+  # # Push the new commit and tag back to your git remote
+  # push_to_git_remote
+
+    # upload_to_testflight
 
 # platform :ios do
 #   desc "Push a new beta build to TestFlight"
