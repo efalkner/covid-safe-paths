@@ -51,7 +51,7 @@ platform :ios do
     }
 
     match(
-      readonly: true
+      readonly: true,
       keychain_name: "tech_at_safepaths_keychain",
       keychain_password: "meow",
       profile: PROFILE
