@@ -30,6 +30,8 @@ private_lane :setup_project do
   )
 end
 
+
+lane :beta do
 platform :ios do
 
     desc "Push a new beta build to TestFlight"
