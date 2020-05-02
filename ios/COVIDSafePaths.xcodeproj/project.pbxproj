@@ -429,6 +429,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 79Z8HUPGC3;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -736,6 +737,8 @@
 			baseConfigurationReference = 71D1C872DB0CCC3BBC3D907E /* Pods-COVIDSafePaths.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0.24;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 79Z8HUPGC3;
@@ -808,6 +811,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.pathcheck.covid-safepaths";
 				PRODUCT_NAME = COVIDSafePaths;
+				PROVISIONING_PROFILE_SPECIFIER = "match Development org.pathcheck.covid-safepaths";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -817,6 +821,8 @@
 			baseConfigurationReference = 9440D638E4331481079AE235 /* Pods-COVIDSafePaths.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0.24;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 79Z8HUPGC3;
@@ -891,6 +897,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.pathcheck.covid-safepaths";
 				PRODUCT_NAME = COVIDSafePaths;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.pathcheck.covid-safepaths";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
