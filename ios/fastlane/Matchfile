@@ -1,4 +1,4 @@
-git_url("git@github.com:Path-Check/certificates.git")
+git_url("https://github.com/Path-Check/certificates.git")
 storage_mode("git")
 type("appstore") # Options: appstore, adhoc, enterprise or development
 app_identifier(["org.pathcheck.covid-safepaths"])
