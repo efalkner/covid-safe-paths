@@ -61,7 +61,7 @@ platform :ios do
       readonly: true,
       keychain_name: "tech_at_safepaths_keychain",
       keychain_password: "meow",
-      git_basic_authorization: "MGU4ODgyNTc2ZjMzZjM4OGUwMDA2OTk2MGZmYWZmMTVmOTRjOWE3MQ=="
+      git_basic_authorization: "tech@safepath.org:" + "MGU4ODgyNTc2ZjMzZjM4OGUwMDA2OTk2MGZmYWZmMTVmOTRjOWE3MQ=="
     )
 
     build_ios_app(
