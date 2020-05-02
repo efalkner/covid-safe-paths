@@ -177,10 +177,20 @@ jobs:
         run: pod install --repo-update
         working-directory: ./ios
 
+      - name: Setup SSH Keys and known_hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+            mkdir -p ~/.ssh
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+            ssh-add - <<< "${{ secrets.MATCH_SSH_CERT }}"
+
       - name: Build ios Beta artifact
         uses: maierj/fastlane-action@v1.4.0
         env:
           MATCH_PASSWORD: ${{ secrets.APPLE_APP_STORE_SECRET }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         with:
           lane: 'beta'
           subdirectory: 'ios'
