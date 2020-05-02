@@ -49,10 +49,10 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.6
-        working-directory: ./android
 
       - name: Install bundler for ruby package management
         run: gem install bundler
+        working-directory: ./android
 
       - name: Cache ruby gems
         uses: actions/cache@v1
