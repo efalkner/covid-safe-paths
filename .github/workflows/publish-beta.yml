@@ -172,12 +172,8 @@ jobs:
 
       - name: Build ios Beta artifact
         uses: maierj/fastlane-action@v1.4.0
-          env:
-          # MATCH_REPO: ${{ secrets.MATCH_REPO }}
+        env:
           MATCH_PASSWORD: ${{ secrets.APPLE_APP_STORE_SECRET }}
-          # SIGNING_ID: ${{ secrets.SIGNING_ID }}
-          # APPLE_ACCOUNT: ${{ secrets.APPLE_ACCOUNT }}
-          # TEAM_ID: ${{ secrets.TEAM_ID }}
         with:
           lane: 'beta'
           subdirectory: 'ios'
