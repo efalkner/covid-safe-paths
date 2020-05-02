@@ -20,12 +20,14 @@ or alternatively using `brew cask install fastlane`
 ```
 fastlane android test
 ```
-Runs all the tests
+Runs Android (Native) unit tests
 ### android beta
 ```
 fastlane android beta
 ```
-Deploy a new Beta version to the Google Play
+Android: Increment versionCode and set versionName to package.json version.
+
+Build a Beta APK and AAB
 
 ----
 

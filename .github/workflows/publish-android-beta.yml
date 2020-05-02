@@ -38,6 +38,8 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.6
+        run: gem install bundler
+        working-directory: ./android
 
       - name: Cache ruby gems
         uses: actions/cache@v1
@@ -51,7 +53,6 @@ jobs:
       - name: Install Ruby Dependencies
         if: steps.ruby_cache.outputs.cache-hit != 'true'
         run: | 
-          gem install bundler
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
         working-directory: ./android
@@ -62,3 +63,25 @@ jobs:
           lane: 'beta'
           subdirectory: 'android'
           bundle-install-path: 'vendor/bundle'
+
+      - name: Upload APK Asset
+        id: upload-release-asset-apk
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: android/app/build/outputs/apk/release/app-release-unsigned-signed.apk
+          asset_name: app-fastlane-${{ github.ref }}.apk
+          asset_content_type: application/zip
+
+      - name: Upload AAB Asset
+        id: upload-release-asset-aab
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: android/app/build/outputs/bundle/release/app.aab
+          asset_name: app-fastlane-${{ github.ref }}.aab
+          asset_content_type: application/zip

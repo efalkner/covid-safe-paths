@@ -129,6 +129,8 @@ android {
 
     defaultConfig {
         applicationId "org.pathcheck.covidsafepaths"
+        versionCode 24
+        versionName "1.0.24"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
@@ -136,9 +138,6 @@ android {
         // detox e2e testing
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-
-        versionCode 24
-        versionName "1.0.0"
     }
     splits {
         abi {
