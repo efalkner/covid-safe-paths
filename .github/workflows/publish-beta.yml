@@ -1,7 +1,9 @@
 on:
   push:
-    # tags:
-    #  - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    # avoids infinite loop on pacakge version bump when merging it into protected branches
+    # paths-ignore:
+    #   - 'package.json'
+    #   - 'CHANGELOG.md'
 
 jobs:
   version_bump:
@@ -9,11 +11,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        # Uncomment when this is merging into master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
         
+        #TODO: ask for someone to add an admin token so we can set this on master branch
       - name: Bump package version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn version --prepatch
+        uses: TriPSs/conventional-changelog-action@feature/add_fastlane
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          git-message: 'chore(release): {version}'
+          output-file: 'CHANGELOG.md'
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # run: yarn version --prepatch
 
   deploy_android:
     runs-on: ubuntu-latest
