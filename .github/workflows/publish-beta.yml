@@ -89,6 +89,17 @@ jobs:
           subdirectory: 'android'
           bundle-install-path: 'vendor/bundle'
 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Beta Release (Test) ${{ github.ref }}
+          draft: true
+          prerelease: true
+
       - name: Upload APK Asset
         id: upload-release-asset-apk
         uses: actions/upload-release-asset@v1
