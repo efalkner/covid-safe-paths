@@ -26,101 +26,101 @@ jobs:
   #     - name: "cat package.json"
   #       run: cat ./package.json
 
-  deploy_android:
-    runs-on: ubuntu-latest
-    # needs: version_bump
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  # deploy_android:
+  #   runs-on: ubuntu-latest
+  #   # needs: version_bump
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: Cache node_modules/
-        uses: actions/cache@v1
-        id: node_cache
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.OS }}-yarn-cache-
+  #     - name: Cache node_modules/
+  #       uses: actions/cache@v1
+  #       id: node_cache
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.OS }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-yarn-cache-
 
-      - name: Install Node Dependencies
-        if: steps.node_cache.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile
+  #     - name: Install Node Dependencies
+  #       if: steps.node_cache.outputs.cache-hit != 'true'
+  #       run: yarn --frozen-lockfile
 
-      - name: Setup kernel for react native, increase watchers for release versions.
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+  #     - name: Setup kernel for react native, increase watchers for release versions.
+  #       run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-      - name: Cache gradle
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+  #     - name: Cache gradle
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.gradle/caches
+  #         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-gradle-
 
-      - name: Set up Ruby 2.6
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.6
+  #     - name: Set up Ruby 2.6
+  #       uses: actions/setup-ruby@v1
+  #       with:
+  #         ruby-version: 2.6
 
-      - name: Install bundler for ruby package management
-        run: gem install bundler
-        working-directory: ./android
+  #     - name: Install bundler for ruby package management
+  #       run: gem install bundler
+  #       working-directory: ./android
 
-      - name: Cache ruby gems
-        uses: actions/cache@v1
-        id: ruby_cache
-        with:
-          path: android/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+  #     - name: Cache ruby gems
+  #       uses: actions/cache@v1
+  #       id: ruby_cache
+  #       with:
+  #         path: android/vendor/bundle
+  #         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-gems-
 
-      - name: Install Ruby Dependencies
-        if: steps.ruby_cache.outputs.cache-hit != 'true'
-        run: | 
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-        working-directory: ./android
+  #     - name: Install Ruby Dependencies
+  #       if: steps.ruby_cache.outputs.cache-hit != 'true'
+  #       run: | 
+  #         bundle config path vendor/bundle
+  #         bundle install --jobs 4 --retry 3
+  #       working-directory: ./android
 
-      - name: Build android Beta artifact
-        uses: maierj/fastlane-action@v1.4.0
-        with:
-          lane: 'beta'
-          subdirectory: 'android'
-          bundle-install-path: 'vendor/bundle'
+  #     - name: Build android Beta artifact
+  #       uses: maierj/fastlane-action@v1.4.0
+  #       with:
+  #         lane: 'beta'
+  #         subdirectory: 'android'
+  #         bundle-install-path: 'vendor/bundle'
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Beta Release (Test) ${{ github.ref }}
-          draft: true
-          prerelease: true
+  #     - name: Create Release
+  #       id: create_release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ github.ref }}
+  #         release_name: Beta Release (Test) ${{ github.ref }}
+  #         draft: true
+  #         prerelease: true
 
-      - name: Upload APK Asset
-        id: upload-release-asset-apk
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: android/app/build/outputs/apk/release/app-release-unsigned-signed.apk
-          asset_name: app-fastlane-${{ github.ref }}.apk
-          asset_content_type: application/zip
+  #     - name: Upload APK Asset
+  #       id: upload-release-asset-apk
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ steps.create_release.outputs.upload_url }} 
+  #         asset_path: android/app/build/outputs/apk/release/app-release-unsigned-signed.apk
+  #         asset_name: app-fastlane-${{ github.ref }}.apk
+  #         asset_content_type: application/zip
 
-      - name: Upload AAB Asset
-        id: upload-release-asset-aab
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: android/app/build/outputs/bundle/release/app.aab
-          asset_name: app-fastlane-${{ github.ref }}.aab
-          asset_content_type: application/zip
+  #     - name: Upload AAB Asset
+  #       id: upload-release-asset-aab
+  #       uses: actions/upload-release-asset@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+  #         asset_path: android/app/build/outputs/bundle/release/app.aab
+  #         asset_name: app-fastlane-${{ github.ref }}.aab
+  #         asset_content_type: application/zip
 
   deploy_ios:
     runs-on: macOS-latest
