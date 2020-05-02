@@ -189,7 +189,7 @@ jobs:
       - name: Build ios Beta artifact
         uses: maierj/fastlane-action@v1.4.0
         env:
-          MATCH_PASSWORD: ${{ secrets.APPLE_APP_STORE_SECRET }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         with:
           lane: 'beta'
