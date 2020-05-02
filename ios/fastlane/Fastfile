@@ -58,7 +58,7 @@ platform :ios do
     }
 
     match(
-      readonly: true,
+      readonly: false,
       keychain_name: "tech_at_safepaths_keychain",
       keychain_password: "meow",
       git_basic_authorization: "dGVjaEBwYXRoY2hlY2sub3JnOjBlODg4MjU3NmYzM2YzODhlMDAwNjk5NjBmZmFmZjE1Zjk0YzlhNzE="
