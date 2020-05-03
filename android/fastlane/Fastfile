@@ -56,18 +56,16 @@ platform :android do
         ENV["secrets.KEY_PASSWORD"] => "key_password"
       }
     )
+  end
 
-    APK_PATH = "android/app/build/outputs/apk/release/app-release-unsigned-signed.apk"
-    AAB_PATH = "android/app/build/outputs/bundle/release/app.aab"
-
-
-    # upload_to_play_store(
-    #   track: 'beta',
-    #   json_key_data: ENV["secrets.GOOGLE_PLAY_STORE_SECRET"],
-    #   aab: AAB_PATH
-    #   version_code: '1.1.0'
-    # )
-
-    # slack(message: 'Successfully distributed a new beta build')
+    desc "Upload the play store artifacts to beta track"
+    lane :play_store do
+      upload_to_play_store(
+        track: 'beta',
+        json_key_data: ENV["secrets.GOOGLE_PLAY_STORE_SECRET"],
+        aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+        apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+        version_name: lane_context[SharedValues::VERSION_NUMBER]
+      )
   end
 end

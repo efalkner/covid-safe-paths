@@ -84,46 +84,18 @@ jobs:
 
       - name: Build android Beta artifact
         uses: maierj/fastlane-action@v1.4.0
-        env:
-          GRADLE_APK_OUTPUT_PATH: android/app/build/outputs/apk/release/app-release-unsigned-signed.apk
-          GRADLE_AAB_OUTPUT_PATH: android/app/build/outputs/bundle/release/app.aab
         with:
           lane: 'beta'
           subdirectory: 'android'
           bundle-install-path: 'vendor/bundle'
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload to Testflight
+        uses: maierj/fastlane-action@v1.4.0
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Beta Release (Test) ${{ github.ref }}
-          draft: true
-          prerelease: true
+          lane: 'play_store'
+          subdirectory: 'android'
+          bundle-install-path: 'vendor/bundle'
 
-      - name: Upload APK Asset
-        id: upload-release-asset-apk
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: android/app/build/outputs/apk/release/app-release-unsigned-signed.apk
-          asset_name: app-fastlane-${{ github.ref }}.apk
-          asset_content_type: application/zip
-
-      - name: Upload AAB Asset
-        id: upload-release-asset-aab
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: android/app/build/outputs/bundle/release/app.aab
-          asset_name: app-fastlane-${{ github.ref }}.aab
-          asset_content_type: application/zip
 
   deploy_ios:
     runs-on: macOS-latest

@@ -16,9 +16,9 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios local
+### ios sync_local_certs
 ```
-fastlane ios local
+fastlane ios sync_local_certs
 ```
 
 ### ios beta

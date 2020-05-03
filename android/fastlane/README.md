@@ -25,9 +25,12 @@ Runs Android (Native) unit tests
 ```
 fastlane android beta
 ```
-Android: Increment versionCode and set versionName to package.json version.
-
 Build a Beta APK and AAB
+### android play_store
+```
+fastlane android play_store
+```
+Upload the play store artifacts to beta track
 
 ----
 
