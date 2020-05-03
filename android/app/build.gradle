@@ -129,8 +129,8 @@ android {
 
     defaultConfig {
         applicationId "org.pathcheck.covidsafepaths"
-        versionCode 24
-        versionName "1.0.24"
+        versionCode 1
+        versionName "1.0.1"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
