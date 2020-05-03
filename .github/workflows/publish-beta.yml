@@ -63,7 +63,7 @@ jobs:
           ruby-version: 2.6
 
       - name: Install bundler for ruby package management
-        run: gem install bundler
+        run: gem install bundler -v "$(grep -A 1 "BUNDLED WITH" ./Gemfile.lock | tail -n 1)"
         working-directory: ./android
 
       - name: Cache ruby gems
@@ -71,7 +71,7 @@ jobs:
         id: ruby_cache
         with:
           path: android/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/android/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
 
@@ -84,6 +84,9 @@ jobs:
 
       - name: Build android Beta artifact
         uses: maierj/fastlane-action@v1.4.0
+        env:
+          GRADLE_APK_OUTPUT_PATH: android/app/build/outputs/apk/release/app-release-unsigned-signed.apk
+          GRADLE_AAB_OUTPUT_PATH: android/app/build/outputs/bundle/release/app.aab
         with:
           lane: 'beta'
           subdirectory: 'android'
@@ -145,14 +148,15 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Install bundler for ruby package management
-        run: gem install bundler
+        run: gem install bundler -v "$(grep -A 1 "BUNDLED WITH" ./Gemfile.lock | tail -n 1)"
+        working-directory: ./ios
 
       - name: Cache ruby gems
         uses: actions/cache@v1
         id: ruby_cache
         with:
           path: ios/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/ios/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
 
