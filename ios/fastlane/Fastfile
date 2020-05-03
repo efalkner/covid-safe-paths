@@ -31,7 +31,7 @@ platform :ios do
     
     APP_ID = "org.pathcheck.covid-safepaths"
     PROFILE = "match AppStore org.pathcheck.covid-safepaths"
-    DEBUG_PROFILE = "match Development org.pathcheck.covid-safepaths"
+    # DEBUG_PROFILE = "match Development org.pathcheck.covid-safepaths"
     TEAM = "79Z8HUPGC3"
     SCHEME = "COVIDSafePaths"
     WORKSPACE = "COVIDSafePaths.xcworkspace"
@@ -94,7 +94,7 @@ platform :ios do
       }
 
       match(
-        readonly: true,
+        readonly: false,
         keychain_name: "tech_at_safepaths_keychain",
         keychain_password: "meow",
         git_basic_authorization: ENV["secrets.MATCH_GIT_BASIC_AUTH"]
