@@ -97,9 +97,9 @@ jobs:
       # Step 3: Decode the service account json key, needed on the next job
       - name: Decode service account key
         env:
-          SERVICE_ACCOUNT: ${{ secrets.GOOGLE_PLAY_STORE_SECRET }}
+          GOOGLE_PLAY_STORE_SECRET: ${{ secrets.GOOGLE_PLAY_STORE_SECRET }}
         run: echo $GOOGLE_PLAY_STORE_SECRET > app/service-account-key.json
-        subdirectory: 'android'
+        working-directory: ./android
 
       - name: Upload to Google Play beta track
         uses: maierj/fastlane-action@v1.4.0
