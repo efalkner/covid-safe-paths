@@ -43,7 +43,7 @@ platform :ios do
         readonly: true,
         keychain_name: "tech_at_safepaths_keychain",
         keychain_password: "meow",
-        git_basic_authorization: "ZWZhbGtuZXI6NzAzY2NjY2E4YTAxNjk5MTFhZjFlYzE1ZmIwMGJmMTIzZjllMDU4ZA=="
+        git_basic_authorization: ENV["secrets.MATCH_GIT_BASIC_AUTH"]
       )
     end
 
@@ -108,8 +108,8 @@ platform :ios do
         clean: true,
       )
 
-      upload_to_testflight(
-        skip_submission: true # to only upload the build
-      ) 
+      # upload_to_testflight(
+      #   skip_submission: true # to only upload the build
+      # ) 
   end
 end
